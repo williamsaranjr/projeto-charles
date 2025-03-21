@@ -2,4 +2,4 @@
 #define MODO_ESCRITA "w"
 
 FILE* carregar_arquivo(char nome[], char modo[]);
-bool escrever_saida(FILE* saida, int n, int tamanho_pendrive, int t_arquivos);
+void escrever_saida(FILE* saida, int *pendrive[], int tamanho, int arquivos[], int t_arquivos, int contador);
