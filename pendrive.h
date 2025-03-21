@@ -1,0 +1,1 @@
+void executar(FILE *entrada, FILE *saida);

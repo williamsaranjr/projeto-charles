@@ -6,11 +6,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MODO_LEITURA "r"
 #define MODO_ESCRITA "w"
 
 #define CODIGO_DE_ERRO NULL
+#define CODIGO_DE_ERRO_BOOL false
 
 FILE* carregar_arquivo(char nome[], char modo[]) {
     FILE *arquivo = fopen(nome, modo);
@@ -20,4 +22,8 @@ FILE* carregar_arquivo(char nome[], char modo[]) {
     }
     printf("[FILE] Arquivo '%s' carregado com sucesso\n", nome);
     return arquivo;
+}
+
+bool escrever_saida(FILE* saida, int n, int tamanho_pendrive, int t_arquivos) {
+    return CODIGO_DE_ERRO_BOOL;
 }

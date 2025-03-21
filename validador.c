@@ -11,7 +11,7 @@
 
 bool isEntradaValida(int count, char *argv[]) {
     if (count != NUMERO_ARGUMENTOS) {
-        printf("[ERRO] Utilizar comando:\n\t./backup <ARQUIVO DE ENTRADA> <ARQUIVO DE SAÍDA>\n");
+        printf("[VLDR] Utilizar comando:\n\t./backup <ARQUIVO DE ENTRADA> <ARQUIVO DE SAÍDA>\n");
         return false;
     }
     return true;
