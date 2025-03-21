@@ -17,6 +17,42 @@
 int n_testes, tamanho_pendrives, t_arquivos;
 int contador = 1; // Contador de casos de teste
 
+int calcular(int pendrive[], int n) {
+    int soma;
+
+    for (int i = 0; i < n; i++) {
+        soma += pendrive[i];
+    }
+
+    return soma;
+}
+
+void backtracking(int *pendrives[], int tamanho, int arquivos[], int t_arquivos, int _j, int offset) {
+    // Condição de parada quando todos os arquivos foram alocados
+    if (_j == t_arquivos) {
+        return;
+    }
+
+    // Loop sobre os pendrives
+    for (int i = 0; i < NUMERO_PENDRIVES; i++) {
+        // Loop sobre os arquivos, começando do índice 'offset'
+        for (int j = offset; j < t_arquivos; j++) {
+            // Se a soma dos arquivos no pendrive e o arquivo atual for menor ou igual ao tamanho do pendrive
+            if (calcular(pendrives[i], offset) + arquivos[j] <= tamanho) {
+                
+                // Aloca o arquivo atual no pendrive
+                pendrives[i][offset] = arquivos[j];
+
+                // Chamada recursiva com o próximo índice de arquivo
+                backtracking(pendrives, tamanho, arquivos, t_arquivos, j + 1, offset + 1);
+                
+                // Caso a recursão não seja bem-sucedida, desfaça a alteração (backtracking)
+                pendrives[i][offset] = 0;  // Opcional: Limpa o arquivo alocado se não for uma solução válida
+            }
+        } 
+    }
+}
+
 void executar(FILE *entrada, FILE *saida) {
     /**
      * Lê a linha do número de casos e tenta converter para um inteiro
@@ -63,6 +99,14 @@ void executar(FILE *entrada, FILE *saida) {
                 return;
             }
         }
+        // Inicialização dos pendrives
+        int pendriveA[tamanho_pendrives];
+        int pendriveB[tamanho_pendrives];
+        int *pendrives[] = {
+            pendriveA, pendriveB
+        };
+
+        backtracking(pendrives, tamanho_pendrives, arquivos, t_arquivos, 0, 0);
 
         printf("\n");
         contador++;
