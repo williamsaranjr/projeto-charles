@@ -7,7 +7,7 @@
 #include "file_utils.h"
 
 #define MENSAGEM_INICIAL "-=-=- Programa de Backup -=-=-\n"
-#define MENSAGEM_FINAL "-=-=-\n"
+#define MENSAGEM_FINAL "-=-=- Fim do programa -=-=-\n"
 
 FILE *entrada;
 FILE *saida;
@@ -34,8 +34,9 @@ int main(int count, char *argv[]) {
     }
     entrada = carregar_arquivo(argv[1], MODO_LEITURA);
     saida = carregar_arquivo(argv[2], MODO_ESCRITA);
-    if (entrada == NULL || saida == NULL) {
+    if (!(entrada && saida)) {
         printf("[ERRO] Um dos arquivos não pôde ser aberto\n");
+        return 1;
     }
 
     imprimir_mensagem_final();

@@ -1,3 +1,9 @@
+/**
+ * Júlia Vitória Bomfim do Nascimento - 10425604
+ * William Saran dos Santos Junior - 10420128
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
