@@ -1,0 +1,12 @@
+Integrantes
+    Júlia Vitória Bomfim do Nascimento - 10425604
+    William Saran dos Santos Junior    - 10420128
+
+Perguntas
+    Técnica utilizada
+        Backtracking
+    Técnica utilizada sempre apresenta o melhor resultado? Justifique
+        Não necessariamente
+
+Links
+    VÍDEO
