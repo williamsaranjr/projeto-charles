@@ -18,7 +18,7 @@ int n_testes, tamanho_pendrives, t_arquivos;
 int contador = 1; // Contador de casos de teste
 
 int calcular(int pendrive[], int n) {
-    int soma;
+    int soma = 0;
 
     for (int i = 0; i < n; i++) {
         soma += pendrive[i];
@@ -27,42 +27,47 @@ int calcular(int pendrive[], int n) {
     return soma;
 }
 
-void backtracking(int *pendrives[], int tamanho, int arquivos[], int t_arquivos, int _j, int offset, int *solucao[]) {
-    // Condição de parada quando todos os arquivos foram alocados
-    if (offset == t_arquivos) {
-        for (int i = 0; i < NUMERO_PENDRIVES; i++) {
-            for (int j = 0; j < t_arquivos; j++) {
-                printf("%d ", pendrives[i][j]);
-                solucao[i][j] = pendrives[i][j];  // Copia os valores para a solução
-            }
-        }
-        return;
+void imprimir(int v[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", v[i]);
     }
-
-    // Loop sobre os pendrives
-    for (int i = 0; i < NUMERO_PENDRIVES; i++) {
-        // Loop sobre os arquivos, começando do índice 'offset'
-        for (int j = offset; j < t_arquivos; j++) {
-            // Se a soma dos arquivos no pendrive e o arquivo atual for menor ou igual ao tamanho do pendrive
-            if (calcular(pendrives[i], offset) + arquivos[j] <= tamanho) {
-                
-                // Aloca o arquivo atual no pendrive
-                pendrives[i][j] = arquivos[j];
-
-                // Chamada recursiva com o próximo índice de arquivo
-                backtracking(pendrives, tamanho, arquivos, t_arquivos, j + 1, offset + 1, solucao);
-                
-                // Caso a recursão não seja bem-sucedida, desfaça a alteração (backtracking)
-                pendrives[i][j] = 0; // Opcional: Limpa o arquivo alocado se não for uma solução válida
-            }
-        } 
-    }
+    printf("\n");
 }
 
 void limpar(int v[], int n) {
     for (int i = 0; i < n; i++) {
         v[i] = 0;
     }
+}
+
+int backtracking(int *pendrives[], int n, int m,
+    int tamanho_pendrive, int *arquivos, int n_arquivos, int _i,
+    FILE* arquivo, int contador) {
+    if (_i == n_arquivos) { // Se todos os arquivos foram alocados
+        for (int i = 0; i < NUMERO_PENDRIVES; i++) {
+            int nPendrive = i == 0 ? n : m;
+            char pendrive = 'A' + i;
+            fprintf(arquivo, "[%d] Pendrive %c - %d GB\n", contador, pendrive, tamanho_pendrive / 2);
+            for (int j = 0; j < nPendrive; j++) {
+                fprintf(arquivo, "[%d] %d GB\n", contador, pendrives[i][j]);
+            }
+            fprintf(arquivo, "\n");
+        }
+        return 0; // Foi encontrada uma solução
+    }
+    for (int i = 0; i < NUMERO_PENDRIVES; i++) {
+        for (int j = _i; j < t_arquivos; j++) {
+            int index = i == 0 ? n : m;
+            if (calcular(pendrives[i], index) + arquivos[_i] <= tamanho_pendrive / 2) {
+                pendrives[i][index] = arquivos[_i];
+                if (backtracking(pendrives, n + (i == 0), m + (i == 1), tamanho_pendrive, arquivos, n_arquivos, _i + 1, arquivo, contador) == 0) {
+                    return 0;
+                }
+                pendrives[i][index] = 0;
+            }
+        }
+    }
+    return 1;
 }
 
 void executar(FILE *entrada, FILE *saida) {
@@ -97,7 +102,7 @@ void executar(FILE *entrada, FILE *saida) {
             return;
         } // Fim das validações
 
-        printf("[EXEC @ %d] Tamanho dos pen drives: %d GB\n", contador, tamanho_pendrives);
+        printf("[EXEC @ %d] Tamanho total dos pen drives: %d GB\n", contador, tamanho_pendrives);
         printf("[EXEC @ %d] Número de arquivos: %d\n", contador, t_arquivos);
         
         int arquivos[t_arquivos];
@@ -115,21 +120,23 @@ void executar(FILE *entrada, FILE *saida) {
             arquivos[i] = var;
         }
         // Inicialização dos pendrives
-        int pendriveA[t_arquivos / 2];
-        limpar(pendriveA, t_arquivos / 2);
+        int pendriveA[t_arquivos];
         int pendriveB[t_arquivos];
-        limpar(pendriveB, t_arquivos / 2);
+        limpar(pendriveA, t_arquivos);
+        limpar(pendriveB, t_arquivos);
         int *pendrives[] = {
             pendriveA, pendriveB
-        };
+        }; // Inicializando todos os pendrives com 0
+        fprintf(saida, "[%d] Armazenamento total: %d GB\n", contador, tamanho_pendrives);
+        int pen = 0;
+        int pen1 = 0;
 
-        int *solucao[] = {
-            pendriveA, pendriveB
-        };
-
-        backtracking(pendrives, tamanho_pendrives / 2, arquivos, t_arquivos, 0, 0, solucao);
-
-        escrever_saida(saida, pendrives, tamanho_pendrives, arquivos, t_arquivos / 2, contador);
+        if (backtracking(pendrives, pen, pen1, tamanho_pendrives, arquivos, t_arquivos, 0, saida, contador) == 1) {
+            printf("[EXEC @ %d] Não foi possível alocar todos os arquivos\n", contador);
+            fprintf(saida, "[%d] Não foi possível alocar todos os arquivos\n", contador);
+        } else {
+            printf("[EXEC @ %d] Todos os arquivos foram alocados com sucesso\n", contador);
+        }
 
         printf("\n");
         contador++;
