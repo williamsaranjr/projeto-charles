@@ -6,7 +6,10 @@ Perguntas
     Técnica utilizada
         Backtracking
     Técnica utilizada sempre apresenta o melhor resultado? Justifique
-        Não necessariamente
+        Não necessariamente, o algoritmo acaba quando a primeira possibilidade é encontrada. Apesar de não
+        encontrar sempre a solução mais eficiente, o algoritmo é mais rápido quando comparado à técnica da força-bruta,
+        pois descarta imediatamente as soluções parciais que não são promissoras (no caso do trabalho, se um arquivo for
+        maior do que o espaço restante em um pendrive), assim reduzindo consideravelmente o número de iterações
 
-Links
+Link
     VÍDEO
