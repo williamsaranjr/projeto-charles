@@ -11,4 +11,3 @@
 #define NUMERO_PENDRIVES 2
 
 FILE* carregar_arquivo(char nome[], char modo[]);
-void escrever_saida(FILE* saida, int pendrive[NUMERO_PENDRIVES][MAXIMO_ARQUIVOS], int tamanho, int arquivos[], int t_arquivos, int contador);

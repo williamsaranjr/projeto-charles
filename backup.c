@@ -37,6 +37,7 @@ void finalizar() {
 
 int main(int count, char *argv[]) {
     imprimir_mensagem_inicial();
+    // Valida se o número de argumentos é válido
     if (!isEntradaValida(count, argv)) {
         return 1;
     }
@@ -45,6 +46,8 @@ int main(int count, char *argv[]) {
 
     entrada = carregar_arquivo(nomeEntrada, MODO_LEITURA);
     saida = carregar_arquivo(nomeSaida, MODO_ESCRITA);
+
+    // Verifica se os arquivos foram carregados corretamente e exibe uma mensagem correspondente
     if (!(entrada && saida)) {
         printf("[MAIN] Um dos arquivos não pôde ser aberto\n");
         return 1;
