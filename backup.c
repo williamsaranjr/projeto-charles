@@ -37,6 +37,7 @@ void finalizar() {
 
 int main(int count, char *argv[]) {
     imprimir_mensagem_inicial();
+    
     // Valida se o número de argumentos é válido
     if (!isEntradaValida(count, argv)) {
         return 1;

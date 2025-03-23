@@ -12,4 +12,8 @@ Perguntas
         maior do que o espaço restante em um pendrive), assim reduzindo consideravelmente o número de iterações
 
 Link
-    VÍDEO
+    https://youtu.be/SxeHIq2n9Lw?si=K5boCPT4CL4A1P2k
+
+Compilação
+	gcc -o pendrive.exe backup.c pendrive.c validador.c file_utils.c
+

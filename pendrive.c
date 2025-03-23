@@ -15,6 +15,7 @@
 int n_testes, tamanho_pendrives, t_arquivos;
 int contador = 1; // Contador de casos de teste
 
+// Calcular o valor no pendrive até o índice n
 int calcular(int pendrive[], int n) {
     int soma = 0;
 
@@ -25,13 +26,7 @@ int calcular(int pendrive[], int n) {
     return soma;
 }
 
-void imprimir(int v[], int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", v[i]);
-    }
-    printf("\n");
-}
-
+// Inicializa o vetor com os valores 0
 void limpar(int v[], int n) {
     for (int i = 0; i < n; i++) {
         v[i] = 0;
@@ -152,7 +147,7 @@ void executar(FILE *entrada, FILE *saida) {
          */
         if (backtracking(pendrives, pen, pen1, tamanho_pendrives, arquivos, t_arquivos, 0, saida, contador) == 1) {
             printf("[EXEC @ %d] Não foi possível alocar todos os arquivos\n", contador);
-            fprintf(saida, "[%d] Não foi possível alocar todos os arquivos\n", contador);
+            fprintf(saida, "[%d] Não foi possível alocar todos os arquivos\n\n", contador);
         } else {
             printf("[EXEC @ %d] Todos os arquivos foram alocados com sucesso\n", contador);
         }
